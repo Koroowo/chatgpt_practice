@@ -23,10 +23,10 @@
     </div>
     <div class="todo_container mx-auto">
         <div class="mt-4">
-            <input type="text" class="form-control w-50 mx-auto" id="task" placeholder="Task:" required >
+            <input type="text" class="form-control w-50 mx-auto" id="task" placeholder="Task:">
             <div class="d-flex justify-content-center align-items-center">
-                <button class="btn btn-success"></button>
-                <button type="button" class="btn btn-warning" onclick="clearinput();"></button>
+                <button class="btn btn-success" onclick="send();"></button>
+                <button class="btn btn-warning" onclick="clearinput();"></button>
             </div>
         </div>
     </div>
@@ -35,5 +35,12 @@
 <script>
     function clearinput(){
         document.getElementById("task").value="";
+    }
+    function send(){
+        if(document.getElementById("task").value!=""){
+            
+        }else{
+            alert("Please Insert Your Task.");
+        }
     }
 </script>
