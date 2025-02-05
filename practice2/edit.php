@@ -18,7 +18,7 @@
             <div class="todo_bar"></div>
             <div class="todo_bar"></div>
         </div>
-        <h2 class="mx-auto text-white m-0">Add Todo</h2>
+        <h2 class="mx-auto text-white m-0">Edit Todo</h2>
         <button class="btn btn-danger" onclick="location.href='index.php'"></button>
     </div>
     <div class="todo_container mx-auto">
@@ -33,16 +33,18 @@
 </body>
 </html>
 <script>
+    document.getElementById("task").value=localStorage.getItem("edit_name");
     function clearinput(){
         document.getElementById("task").value="";
     }
     function send(){
         if(document.getElementById("task").value!=""){
             let task=document.getElementById("task").value;
+            let id=localStorage.getItem("edit_id");
             $.ajax({
-                url:"addtask.php",
+                url:"edittask.php",
                 method:"POST",
-                data:{task:task}
+                data:{task:task,id:id}
             }).done(function(){
                 window.location.href='index.php'
             })

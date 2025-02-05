@@ -27,20 +27,66 @@
 </body>
 </html>
 <script>
-    $.ajax({
-        url:"initial.php",
-        method:"GET"
-    }).done(function(array){
-        console.log(array);
-        if(array.length>0){
-            document.getElementById("todo_lists").innerHTML=""
-            let content="<table class='table table-striped' id='todo_lists'>";
-            for(i=0;i<array.length;i++){
-                content +="<tr class='d-flex'><td class='col-2'><input type='checkbox' class='input'></td><td class='col-8'><p class='m-0'>"+ array[i].task_name +"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></tr>";
+    function initial(){
+        $.ajax({
+            url:"initial.php",
+            method:"GET"
+        }).done(function(array){
+            console.log(array);
+            if(array.length>0){
+                document.getElementById("todo_lists").innerHTML=""
+                let content="<table class='table table-striped' id='todo_lists'>";
+                for(i=0;i<array.length;i++){
+                    if(array[i].status==1){
+                        content +="<tr class='d-flex'><td class='col-2'><input type='checkbox' class='inputcheck' id="+array[i].id+" checked></td><td class='col-8'><p class='m-0 task done'>"+ array[i].task_name +"</p></td><td class='col-1'><button class='btn btn-warning' onclick='edit("+array[i].id+", \""+array[i].task_name+"\")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='del("+array[i].id+")'></button></td></tr>";
+                    }else{
+                        content +="<tr class='d-flex'><td class='col-2'><input type='checkbox' class='inputcheck' id="+array[i].id+" ></td><td class='col-8'><p class='m-0 task'>"+ array[i].task_name +"</p></td><td class='col-1'><button class='btn btn-warning' onclick='edit("+array[i].id+", \""+array[i].task_name+"\")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='del("+array[i].id+")'></button></td></tr>";
+                    }
+                }
+                document.getElementById("todo_lists").innerHTML+=content+"</table>";
+                document.querySelectorAll(".inputcheck").forEach(function(inputs){
+                    inputs.addEventListener("change",function(){
+                        if(this.checked){
+                            let id=this.id;
+                            let status=1;
+                            let row=this.closest("tr");
+                            row.querySelector(".task").classList.add("done");
+                            $.ajax({
+                                url:"status.php",
+                                method:"POST",
+                                data:{id:id,status:status}
+                            })
+                        }else{
+                            let id=this.id;
+                            let status=0;
+                            let row=this.closest("tr");
+                            row.querySelector(".task").classList.remove("done");
+                            $.ajax({
+                                url:"status.php",
+                                method:"POST",
+                                data:{id:id,status:status}
+                            })
+                        }
+                    })
+                })
+            }else{
+                document.getElementById("todo_lists").innerHTML="<div class='empty_message'><h4 class='m-0'>No Tasks</h4></div>";
             }
-            document.getElementById("todo_lists").innerHTML+=content+"</table>";
-        }else{
-            document.getElementById("todo_lists").innerHTML="<div class='empty_message'><h4 class='m-0'>No Tasks</h4></div>";
-        }
-    })
+        })
+    }
+    initial();
+    function edit(id,task_name){
+        localStorage.setItem("edit_id",id);
+        localStorage.setItem("edit_name",task_name);
+        window.location.href="edit.php";
+    }
+    function del(id){
+        $.ajax({
+            url:"delete.php",
+            method:"POST",
+            data:{id:id}
+        }).done(function(){
+            initial();
+        })
+    }
 </script>
