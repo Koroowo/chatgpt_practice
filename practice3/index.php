@@ -29,7 +29,7 @@
         </div>
         <div class="right_section">
             <div class="d-flex justify-content-end align-items-center">
-                <button class="btn btn-success" onclick="window.location.href=''">Add Category</button>
+                <button class="btn btn-success" onclick="modal();">Add Category</button>
             </div>
             <div class="category_container">
                 <?php
@@ -40,6 +40,18 @@
                 ?>
                 
             </div>
+        </div>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal_div" id="modal_div">
+            <button class="modal_exit btn btn-danger" onclick="exitmodal()">X</button>
+            <form action="addcategory.php" method="POST">
+                <input type="text" id="category_input" name="category" class="mb-4 form-control" placeholder="Category:" required>
+                <div class="d-flex justify-content-center mt-4">
+                    <button class="btn btn-success mx-3">Add</button>
+                    <button type="button" class="btn btn-warning mx-3" onclick="reset();">Reset</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
@@ -53,5 +65,14 @@
         }).done(function(){
             window.location.href='Todo.php';
         })
+    }
+    function modal(){
+        document.getElementById("modal").style.display="flex";
+    }
+    function exitmodal(){
+        document.getElementById("modal").style.display="none";
+    }
+    function reset(){
+        document.getElementById("category_input").value="";
     }
 </script>
