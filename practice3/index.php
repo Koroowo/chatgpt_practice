@@ -16,6 +16,9 @@
     <div class="page_section">
         <div class="left_section">
             <h2 class="m-0 ">Menu</h2>
+            <div class="top_right_logo_div">
+                <img src="youyun.jpg" class="top_right_logo" alt="">
+            </div>
             <div class="menu_list" id="menu_list">
                 
             </div>
@@ -25,12 +28,6 @@
                 <button class="btn btn-success" onclick="modal();">Add Category</button>
             </div>
             <div class="category_container" id="category_container">
-                <?php
-                    $lists=$pdo->query("SELECT * FROM `advanced_todo_lists`")->fetchAll();
-                    foreach($lists as $list){
-                        echo "";
-                    }
-                ?>
                 
             </div>
         </div>
@@ -38,7 +35,7 @@
     <div class="modal" id="modal">
         <div class="modal_div" id="modal_div">
             <button class="modal_exit btn btn-danger" onclick="exitmodal()">X</button>
-            <input type="text" id="category_input" name="category" class="mb-4 form-control" placeholder="Category:" required>
+            <input type="text" id="category_input" name="category" class="mx-auto w-50 mb-4 form-control" placeholder="Category:" required>
             <div class="d-flex justify-content-center mt-4">
                 <button class="btn btn-success mx-3" onclick="send();">Add</button>
                 <button type="button" class="btn btn-warning mx-3" onclick="reset();">Reset</button>
@@ -58,7 +55,7 @@
             document.getElementById("menu_list").innerHTML="";
             document.getElementById("category_container").innerHTML="";
             for(i=0;i<lists.length;i++){
-                list +="<p class='btn' onclick='Category(\""+ lists[i].list +"\")'>"+lists[i].list+"</p>";
+                list +="<p class='btn m-0' onclick='Category(\""+ lists[i].list +"\")'>"+lists[i].list+"</p>";
                 category +="<div class='category_div' onclick='Category(\""+ lists[i].list +"\")'><h3 class='m-0'>"+ lists[i].list +"</h3></div>"
             }
             document.getElementById("menu_list").innerHTML=list;
@@ -82,7 +79,17 @@
     }
     function send(){
         if(document.getElementById("category_input").value!=""){
-            $.ajax()
+            document.getElementById("modal").style.display="none";
+            let input=document.getElementById("category_input").value;
+            $.ajax({
+                url:"addcategory.php",
+                method:"POST",
+                data:{category:input}
+            }).done(function(){
+                initial();
+            })
+        }else {
+            alert("Please Input Your New Category Name.");
         }
     }
     function reset(){
