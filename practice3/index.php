@@ -16,14 +16,7 @@
     <div class="page_section">
         <div class="left_section">
             <h2 class="m-0 ">Menu</h2>
-            <div class="menu_list">
-                <h4 class="m-0">LISTS</h4>
-                <?php
-                    $lists=$pdo->query("SELECT * FROM `advanced_todo_lists`")->fetchAll();
-                    foreach($lists as $list){
-                        echo "<p class='btn' onclick='Category(".'"'.$list["list"].'"'.")'>".$list["list"]."</p>";
-                    }
-                ?>
+            <div class="menu_list" id="menu_list">
                 
             </div>
         </div>
@@ -31,11 +24,11 @@
             <div class="d-flex justify-content-end align-items-center">
                 <button class="btn btn-success" onclick="modal();">Add Category</button>
             </div>
-            <div class="category_container">
+            <div class="category_container" id="category_container">
                 <?php
                     $lists=$pdo->query("SELECT * FROM `advanced_todo_lists`")->fetchAll();
                     foreach($lists as $list){
-                        echo "<div class='category_div' onclick='Category(".'"'.$list["list"].'"'.")'><h3 class='m-0'>".$list["list"]."</h3></div>";
+                        echo "";
                     }
                 ?>
                 
@@ -45,18 +38,33 @@
     <div class="modal" id="modal">
         <div class="modal_div" id="modal_div">
             <button class="modal_exit btn btn-danger" onclick="exitmodal()">X</button>
-            <form action="addcategory.php" method="POST">
-                <input type="text" id="category_input" name="category" class="mb-4 form-control" placeholder="Category:" required>
-                <div class="d-flex justify-content-center mt-4">
-                    <button class="btn btn-success mx-3">Add</button>
-                    <button type="button" class="btn btn-warning mx-3" onclick="reset();">Reset</button>
-                </div>
-            </form>
+            <input type="text" id="category_input" name="category" class="mb-4 form-control" placeholder="Category:" required>
+            <div class="d-flex justify-content-center mt-4">
+                <button class="btn btn-success mx-3" onclick="send();">Add</button>
+                <button type="button" class="btn btn-warning mx-3" onclick="reset();">Reset</button>
+            </div>
         </div>
     </div>
 </body>
 </html>
 <script>
+    function initial(){
+        $.ajax({
+            url:"fetchcategory.php",
+            method:"GET"
+        }).done(function(lists){
+            let list="<h4 class='m-0'>LISTS</h4>";
+            let category="";
+            document.getElementById("menu_list").innerHTML="";
+            document.getElementById("category_container").innerHTML="";
+            for(i=0;i<lists.length;i++){
+                list +="<p class='btn' onclick='Category(\""+ lists[i].list +"\")'>"+lists[i].list+"</p>";
+                category +="<div class='category_div' onclick='Category(\""+ lists[i].list +"\")'><h3 class='m-0'>"+ lists[i].list +"</h3></div>"
+            }
+            document.getElementById("menu_list").innerHTML=list;
+            document.getElementById("category_container").innerHTML=category;
+        })
+    }
     function Category(name){
         $.ajax({
             url:"setcategory.php",
@@ -72,7 +80,13 @@
     function exitmodal(){
         document.getElementById("modal").style.display="none";
     }
+    function send(){
+        if(document.getElementById("category_input").value!=""){
+            $.ajax()
+        }
+    }
     function reset(){
         document.getElementById("category_input").value="";
     }
+    initial();
 </script>
