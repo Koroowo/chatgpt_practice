@@ -28,8 +28,13 @@
                 <h3 class="m-0" id="category_name"><?= $_SESSION["category_name"]?></h3>
                 <button class="btn btn-danger" onclick="DeleteCategory();">Delete Category</button>
             </div>
-            <div class="category_container" id="category_container">
-                
+            <div class="list_container mx-auto mt-5 p-4">
+                <div class="d-flex justify-content-end align-items-center">
+                    <button class="btn btn-success"></button>
+                </div>
+                <table class="table table-striped" id="list_table">
+
+                </table>
             </div>
         </div>
     </div>
@@ -52,7 +57,6 @@
             method:"GET"
         }).done(function(lists){
             let list="<h4 class='m-0'>LISTS</h4>";
-            let category="";
             document.getElementById("menu_list").innerHTML="";
             for(i=0;i<lists.length;i++){
                 list +="<p class='btn m-0' onclick='Category(\""+ lists[i].list +"\")'>"+lists[i].list+"</p>";
@@ -65,7 +69,19 @@
             url:"fetchlist.php",
             method:"GET"
         }).done(function(todos){
-
+            let todo="";
+            document.getElementById("list_table").innerHTML="";
+            for(i=0;i<todos.length;i++){
+                if(todos[i].priority=='high'){
+                    todo+="<tr style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick=''></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                }else if(todos[i].priority=='medium'){
+                    todo+="<tr style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick=''></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                }else{
+                    todo+="<tr style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick=''></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                }
+                console.log(todos[i]);
+            }
+            document.getElementById("list_table").innerHTML=todo;
         })
     }
     function Category(name){
@@ -109,5 +125,9 @@
     function reset(){
         document.getElementById("category_input").value="";
     }
+    $("#list_table").sortable({
+        items:"tr"
+    });
     initial();
+    ListInitial();
 </script>

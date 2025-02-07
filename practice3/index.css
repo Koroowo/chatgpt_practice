@@ -1,6 +1,8 @@
 body{
     margin: 0;
     padding: 0;
+    overflow-x: none;
+    overflow-y: none;
 }
 .cursor-pointer{
     cursor:pointer;
@@ -103,4 +105,11 @@ body{
     position: absolute;
     top: 16px;
     right: 16px;
+}
+.list_container{
+    background-color: rgb(227, 233, 255);
+    height: 550px;
+    width: 450px;
+    overflow-y: auto;
+    overflow-x: none;
 }
