@@ -24,8 +24,9 @@
             </div>
         </div>
         <div class="right_section">
-            <div class="d-flex justify-content-end align-items-center">
-                <button class="btn btn-success" onclick="modal();">Add Category</button>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="m-0" id="category_name"><?= $_SESSION["category_name"]?></h3>
+                <button class="btn btn-danger" onclick="DeleteCategory();">Delete Category</button>
             </div>
             <div class="category_container" id="category_container">
                 
@@ -53,13 +54,18 @@
             let list="<h4 class='m-0'>LISTS</h4>";
             let category="";
             document.getElementById("menu_list").innerHTML="";
-            document.getElementById("category_container").innerHTML="";
             for(i=0;i<lists.length;i++){
                 list +="<p class='btn m-0' onclick='Category(\""+ lists[i].list +"\")'>"+lists[i].list+"</p>";
-                category +="<div class='category_div' onclick='Category(\""+ lists[i].list +"\")'><h3 class='m-0'>"+ lists[i].list +"</h3></div>"
             }
             document.getElementById("menu_list").innerHTML=list;
-            document.getElementById("category_container").innerHTML=category;
+        })
+    }
+    function ListInitial(){
+        $.ajax({
+            url:"fetchlist.php",
+            method:"GET"
+        }).done(function(todos){
+
         })
     }
     function Category(name){
@@ -69,6 +75,14 @@
             data:{category:name}
         }).done(function(){
             window.location.href='todo.php';
+        })
+    }
+    function DeleteCategory(){
+        $.ajax({
+            url:"delcategory.php",
+            method:"POST"
+        }).done(function(){
+            initial();
         })
     }
     function modal(){
