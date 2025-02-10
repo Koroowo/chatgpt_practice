@@ -30,7 +30,7 @@
             </div>
             <div class="list_container mx-auto mt-5 p-4">
                 <div class="d-flex justify-content-end align-items-center">
-                    <button class="btn btn-success" onclick="modal();"></button>
+                    <button class="btn btn-success" onclick="addmodal();"></button>
                 </div>
                 <table class="table table-striped overflow-auto mt-2" id="list_table">
 
@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="modal">
+    <div class="modal" id="add_modal">
         <div class="modal_div" id="modal_div">
             <button class="modal_exit btn btn-danger" onclick="exitmodal()">X</button>
             <input type="text" id="category_input" name="category" class="mx-auto w-50 mb-4 form-control" placeholder="Todo:" required>
@@ -48,7 +48,22 @@
                 <option value="high">High</option>
             </select>
             <div class="d-flex justify-content-center mt-4">
-                <button class="btn btn-success mx-3" onclick="send();">Add</button>
+                <button class="btn btn-success mx-3" onclick="add();">Add</button>
+                <button type="button" class="btn btn-warning mx-3" onclick="reset();">Reset</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="edit_modal">
+        <div class="modal_div" id="modal_div">
+            <button class="modal_exit btn btn-danger" onclick="exitmodal()">X</button>
+            <input type="text" id="edit_input" name="category" class="mx-auto w-50 mb-4 form-control" placeholder="Todo:" required>
+            <select id="edit_priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <div class="d-flex justify-content-center mt-4">
+                <button class="btn btn-success mx-3" onclick="edit();">Edit</button>
                 <button type="button" class="btn btn-warning mx-3" onclick="reset();">Reset</button>
             </div>
         </div>
@@ -56,6 +71,7 @@
 </body>
 </html>
 <script>
+    let gb_todos=[];
     function initial(){
         $.ajax({
             url:"fetchcategory.php",
@@ -74,27 +90,28 @@
             url:"fetchlist.php",
             method:"GET"
         }).done(function(todos){
+            gb_todos=todos;
+            console.log(todos);
             let todo="";
             document.getElementById("list_table").innerHTML="";
             for(i=0;i<todos.length;i++){
                 if(todos[i].status==1){
                     if(todos[i].priority=='high'){
-                        todo+="<tr style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                        todo+="<tr style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else if(todos[i].priority=='medium'){
-                        todo+="<tr style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                        todo+="<tr style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else{
-                        todo+="<tr style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
-                    } done
+                        todo+="<tr style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
+                    } 
                 }else{
                     if(todos[i].priority=='high'){
-                        todo+="<tr style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                        todo+="<tr style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else if(todos[i].priority=='medium'){
-                        todo+="<tr style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                        todo+="<tr style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else{
-                        todo+="<tr style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning'></button></td><td class='col-1'><button class='btn btn-danger'></button></td></div></tr>"
+                        todo+="<tr style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }
                 }
-                console.log(todos[i]);
             }
             document.getElementById("list_table").innerHTML=todo;
         })
@@ -116,15 +133,27 @@
             window.location.href="index.php";
         })
     }
-    function modal(){
-        document.getElementById("modal").style.display="flex";
+    function addmodal(){
+        document.getElementById("add_modal").style.display="flex";
+    }
+    function editmodal(id){
+        document.getElementById("edit_modal").style.display="flex";
+        for(i=0;i<gb_todos.length;i++){
+            if(gb_todos[i].id==id){
+                localStorage.setItem("edit_todo",id);
+                document.getElementById("edit_input").value=gb_todos[i].task;
+                document.getElementById("edit_priority").value=gb_todos[i].priority;
+            }
+        }
     }
     function exitmodal(){
-        document.getElementById("modal").style.display="none";
+        document.querySelectorAll(".modal").forEach(function(modal){
+            modal.style.display="none";
+        })
     }
-    function send(){
+    function add(){
         if(document.getElementById("category_input").value!=""){
-            document.getElementById("modal").style.display="none";
+            document.getElementById("add_modal").style.display="none";
             let input=document.getElementById("category_input").value;
             let priority=document.getElementById("category_priority").value;
             $.ajax({
@@ -135,23 +164,60 @@
                 ListInitial();
             })
         }else {
-            alert("Please Input Your New Category Name.");
+            alert("Please Input Your New Todo Name.");
+        }
+    }
+    function edit(){
+        if(document.getElementById("edit_input").value!=""){
+            document.getElementById("edit_modal").style.display="none";
+            let input=document.getElementById("edit_input").value;
+            let priority=document.getElementById("edit_priority").value;
+            let id=localStorage.getItem("edit_todo");
+            $.ajax({
+                url:"edittodo.php",
+                method:"POST",
+                data:{todo:input,priority:priority,id:id}
+            }).done(function(){
+                ListInitial();
+            })
+        }else{
+            alert("Please Input Your New Todo Name.");
         }
     }
     function reset(){
-        document.getElementById("category_input").value="";
+        document.querySelectorAll("input").forEach(function(inputs){
+            inputs.value="";
+        })
     }
     function check(el,id){
         if(el.checked){
             let row=el.closest("tr");
             row.querySelector("p").classList.add("done");
             let status=1;
-
+            $.ajax({
+                url:"statustodo.php",
+                method:"POST",
+                data:{status:status,id:id}
+            })
         }else{
             let row=el.closest("tr");
             row.querySelector("p").classList.remove("done");
-            let status=1;
+            let status=0;
+            $.ajax({
+                url:"statustodo.php",
+                method:"POST",
+                data:{status:status,id:id}
+            })
         }
+    }
+    function DelTodo(id){
+        $.ajax({
+            url:"deltodo.php",
+            method:"POST",
+            data:{id:id}
+        }).done(function(){
+            ListInitial();
+        })
     }
     initial();
     ListInitial();
