@@ -113,3 +113,6 @@ body{
     overflow-y: auto;
     overflow-x: none;
 }
+.done{
+    text-decoration: line-through;
+}
