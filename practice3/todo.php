@@ -32,8 +32,10 @@
                 <div class="d-flex justify-content-end align-items-center">
                     <button class="btn btn-success" onclick="addmodal();"></button>
                 </div>
-                <table class="table table-striped overflow-auto mt-2" id="list_table">
+                <table class="table table-striped overflow-auto mt-2">
+                    <tbody id="list_table">
 
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -97,19 +99,19 @@
             for(i=0;i<todos.length;i++){
                 if(todos[i].status==1){
                     if(todos[i].priority=='high'){
-                        todo+="<tr style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
+                        todo+="<tr class='list_sort' id="+ todos[i].id +" style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else if(todos[i].priority=='medium'){
-                        todo+="<tr style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
+                        todo+="<tr class='list_sort' id="+ todos[i].id +" style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else{
-                        todo+="<tr style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
+                        todo+="<tr class='list_sort' id="+ todos[i].id +" style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' checked onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0 done'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     } 
                 }else{
                     if(todos[i].priority=='high'){
-                        todo+="<tr style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
+                        todo+="<tr class='list_sort' id="+ todos[i].id +" style='background-color:rgb(255, 73, 109);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else if(todos[i].priority=='medium'){
-                        todo+="<tr style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
+                        todo+="<tr class='list_sort' id="+ todos[i].id +" style='background-color:rgb(255, 235, 0);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }else{
-                        todo+="<tr style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
+                        todo+="<tr class='list_sort' id="+ todos[i].id +" style='background-color:rgb(118, 232, 137);'><div class='d-flex'><td class='col-2'><input type='checkbox' onclick='check(this,"+ todos[i].id +")'></td><td class='col-8'><p class='m-0'>"+todos[i].task+"</p></td><td class='col-1'><button class='btn btn-warning' onclick='editmodal("+todos[i].id +")'></button></td><td class='col-1'><button class='btn btn-danger' onclick='DelTodo("+ todos[i].id +")'></button></td></div></tr>"
                     }
                 }
             }
@@ -217,8 +219,38 @@
             data:{id:id}
         }).done(function(){
             ListInitial();
+            let sorts=document.querySelectorAll(".list_sort");
+            let sort_array=[];
+            for(i=0;i<sorts.length;i++){
+                sort_array.push(sorts[i].id);
+            }
+            console.log(sort_array);
+            // $.ajax({
+            //     url:"sorttodo.php",
+            //     method:"POST",
+            //     data:{array:sort_array}
+            // }).done(function(){
+            //     ListInitial();
+            // })
         })
     }
+    $("#list_table").sortable({
+        cursor:"pointer",
+        update: function(){
+            let sorts=document.querySelectorAll(".list_sort");
+            let sort_array=[];
+            for(i=0;i<sorts.length;i++){
+                sort_array.push(sorts[i].id);
+            }
+            $.ajax({
+                url:"sorttodo.php",
+                method:"POST",
+                data:{array:sort_array}
+            }).done(function(){
+                ListInitial();
+            })
+        }
+    });
     initial();
     ListInitial();
 </script>
