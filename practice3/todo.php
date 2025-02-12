@@ -93,7 +93,6 @@
             method:"GET"
         }).done(function(todos){
             gb_todos=todos;
-            console.log(todos);
             let todo="";
             document.getElementById("list_table").innerHTML="";
             for(i=0;i<todos.length;i++){
@@ -218,24 +217,23 @@
             method:"POST",
             data:{id:id}
         }).done(function(){
-            ListInitial();
+            ListInitial()
             let sorts=document.querySelectorAll(".list_sort");
             let sort_array=[];
             for(i=0;i<sorts.length;i++){
                 sort_array.push(sorts[i].id);
             }
             console.log(sort_array);
-            // $.ajax({
-            //     url:"sorttodo.php",
-            //     method:"POST",
-            //     data:{array:sort_array}
-            // }).done(function(){
-            //     ListInitial();
-            // })
+            $.ajax({
+                url:"sorttodo.php",
+                method:"POST",
+                data:{array:sort_array}
+            })
         })
     }
     $("#list_table").sortable({
         cursor:"pointer",
+        opacity:0.6,
         update: function(){
             let sorts=document.querySelectorAll(".list_sort");
             let sort_array=[];
