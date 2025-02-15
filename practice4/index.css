@@ -1,0 +1,67 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(167, 216, 246);
+}
+.top_right_logo_div{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 150px;
+    width: 150px;
+    background-color: white;
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+.top_right_logo{
+    width: 80%;
+    object-fit: cover;
+    transform: rotate(45deg) translate(15%,-32%);
+}
+.quote_title{
+    margin-top: 125px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+    width: 300px;
+    background-color: white;
+    box-shadow: 0px 0px 10px white;
+}
+.quote_title h2{
+    margin: 0;
+    font-weight: 200;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.quote_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 16px;
+    margin-top: 50px;
+    height: 350px;
+    width: 600px;
+    background-color: white;
+    box-shadow: 0px 0px 10px white;
+}
+.quote_div{
+    height: 175px;
+    width: 350px;
+    background-color: transparent;
+    box-shadow: 0px 0px 3px rgb(167, 216, 246);
+    border: 1px solid rgb(167, 216, 246);
+}
+.generate_quote{
+    border-radius: 8px;
+    background-color: black;
+    color: white;
+    width: 300px;
+    height: 50px;
+    transition-duration: 0.2s;
+}
+.generate_quote:hover{
+    background-color: rgb(46, 46, 46);
+}
+.generate_quote:active{
+    scale: 0.9;
+}
