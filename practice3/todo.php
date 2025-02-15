@@ -217,7 +217,7 @@
             method:"POST",
             data:{id:id}
         }).done(function(){
-            ListInitial()
+            ListInitial();
             let sorts=document.querySelectorAll(".list_sort");
             let sort_array=[];
             for(i=0;i<sorts.length;i++){
