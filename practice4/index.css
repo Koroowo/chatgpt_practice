@@ -50,6 +50,7 @@ body{
     background-color: transparent;
     box-shadow: 0px 0px 3px rgb(167, 216, 246);
     border: 1px solid rgb(167, 216, 246);
+    transition: opacity 0.25s ease;
 }
 .generate_quote{
     border-radius: 8px;

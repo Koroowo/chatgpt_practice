@@ -25,28 +25,37 @@
 </html>
 <script>
     function initial(){
+        document.getElementById("quote_div").style.opacity=0;
         $.ajax({
             url:"initialquote.php",
             method:"GET",
             dataType:"json"
         }).done(function(quote){
-            let text="";
-            document.getElementById("quote_div").innerHTML="";
-            text="<h4 class='m-0 quote' id='"+quote[0].id+"'>"+quote[0].quote+"</h4>";
-            document.getElementById("quote_div").innerHTML=text;
+            setTimeout(() => {
+                let text="";
+                document.getElementById("quote_div").innerHTML="";
+                text="<h4 class='m-0 quote' id='"+quote[0].id+"'>"+quote[0].quote+"</h4>";
+                document.getElementById("quote_div").innerHTML=text;
+                document.getElementById("quote_div").style.opacity=1;
+            }, 100);
         })
     }
     function quote(){
+        document.getElementById("quote_div").style.opacity=0;
         let id=document.querySelector(".quote").id;
         $.ajax({
             url:"generatequote.php",
             method:"POST",
             data:{id:id}
         }).done(function(quote){
-            let text="";
-            document.getElementById("quote_div").innerHTML="";
-            text="<h4 class='m-0 quote' id='"+quote[0].id+"'>"+quote[0].quote+"</h4>";
-            document.getElementById("quote_div").innerHTML=text;
+            console.log(quote);
+            setTimeout(() => {
+                let text="";
+                document.getElementById("quote_div").innerHTML="";
+                text="<h4 class='m-0 quote' id='"+quote[0].id+"'>"+quote[0].quote+"</h4>";
+                document.getElementById("quote_div").innerHTML=text;
+                document.getElementById("quote_div").style.opacity=1;
+            }, 250);
         })
     }
     initial();
