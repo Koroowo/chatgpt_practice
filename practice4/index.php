@@ -16,7 +16,7 @@
         <h2>Quote Generator</h2>
     </div>
     <div class="quote_container mx-auto">
-        <div class="quote_div">
+        <div class="quote_div" id="quote_div">
 
         </div>
         <button class="generate_quote" onclick="quote();">Get Quote</button>
@@ -24,12 +24,30 @@
 </body>
 </html>
 <script>
-    function quote(){
+    function initial(){
         $.ajax({
-            url:"generatequote.php",
+            url:"initialquote.php",
             method:"GET",
-            
+            dataType:"json"
+        }).done(function(quote){
+            let text="";
+            document.getElementById("quote_div").innerHTML="";
+            text="<h4 class='m-0 quote' id='"+quote[0].id+"'>"+quote[0].quote+"</h4>";
+            document.getElementById("quote_div").innerHTML=text;
         })
     }
-    quote();
+    function quote(){
+        let id=document.querySelector(".quote").id;
+        $.ajax({
+            url:"generatequote.php",
+            method:"POST",
+            data:{id:id}
+        }).done(function(quote){
+            let text="";
+            document.getElementById("quote_div").innerHTML="";
+            text="<h4 class='m-0 quote' id='"+quote[0].id+"'>"+quote[0].quote+"</h4>";
+            document.getElementById("quote_div").innerHTML=text;
+        })
+    }
+    initial();
 </script>
