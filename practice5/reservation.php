@@ -25,6 +25,7 @@
         <a class="navigation mt-2 mx-4 text-white" href="usermessage.php">Visitor Messages</a>
         <a class="navigation mt-2 mx-4 text-white" href="reservation.php">Reservations</a>
     </div>
+    <div class="mx-auto mt-2"></div>
 </body>
 </html>
 <script>
