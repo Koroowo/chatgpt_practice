@@ -22,8 +22,8 @@
         </div>
     </div>
     <div class="box_menu" id="box">
-        <a class="navigation mt-2 mx-4 text-white" href="">Visitor Messages</a>
-        <a class="navigation mt-2 mx-4 text-white" href="">Reservations</a>
+        <a class="navigation mt-2 mx-4 text-white" onclick="location.href='usermessage.php'">Visitor Messages</a>
+        <a class="navigation mt-2 mx-4 text-white" onclick="location.href='reservation.php'">Reservations</a>
     </div>
 </body>
 </html>

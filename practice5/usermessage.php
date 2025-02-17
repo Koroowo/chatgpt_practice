@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Travel Portal</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="index.css">
+    <script src="jquery.js"></script>
+</head>
+<body>
+    <div class="top_banner">
+        <h2 class="m-0">Travel Portal</h2>
+        <div class="d-flex justify-content-end">
+            <a class="navigation mt-2 mx-4" href="">Visitor Messages</a>
+            <a class="navigation mt-2 mx-4" href="">Reservations</a>
+            <div class="menu_box" id="menu">
+                <div class="menu_bar"></div>
+                <div class="menu_bar"></div>
+                <div class="menu_bar"></div>
+            </div>
+        </div>
+    </div>
+    <div class="box_menu" id="box">
+        <a class="navigation mt-2 mx-4 text-white" onclick="location.href='usermessage.php'">Visitor Messages</a>
+        <a class="navigation mt-2 mx-4 text-white" onclick="location.href='reservation.php'">Reservations</a>
+    </div>
+    <div class="usermessage mx-auto">
+        <table class="table table-striped"></table>
+    </div>
+</body>
+</html>
+<script>
+    document.getElementById("menu").addEventListener("click",function(){
+        document.getElementById("box").classList.toggle("change");
+    })
+</script>
