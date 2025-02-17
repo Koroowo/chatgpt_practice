@@ -27,15 +27,15 @@
     </div>
     <div class="d-flex justify-content-center my-4">
         <h2 class="mx-2">Visitor Message</h2>
-        <button class="btn mx-2">Add Message</button>
+        <button class="btn mx-2" onclick="AddModal();">Add Message</button>
     </div>
     <div class="usermessage mx-auto">
-        <table class="bg-dark text-white table table-striped text-center" id="message_table">
+        <table class="bg-dark text-white table table-striped text-center overflow-auto" id="message_table">
         </table>
     </div>
     <div class="pop_up_bg" id="add">
         <div class="pop_up_modal">
-            <button class="btn btn-danger pop_up_exit">X</button>
+            <button class="btn btn-danger pop_up_exit" onclick="ExitModal();">X</button>
             <div class="d-flex justify-content-center">
                 <h2 class="m-0 my-3">Add Message</h2>
             </div>
@@ -78,15 +78,21 @@
             document.getElementById("message_table").innerHTML=tr;
         })
     }
+    function AddModal(){
+        document.getElementById("add").style.display="block";
+    }
     function send(){
-        let name=document.getElementById("name");
-        let email=document.getElementById("email");
-        let message=document.getElementById("message");
+        document.getElementById("add").style.display="none";
+        let name=document.getElementById("name").value;
+        let email=document.getElementById("email").value;
+        let message=document.getElementById("message").value;
         if(name!=""&&email!=""&&message!=""){
             $.ajax({
                 url:"addmessage.php",
                 method:"POST",
                 data:{name:name,email:email,message:message}
+            }).done(function(){
+                initial();
             })
         }else{
             alert("Please Enter All The Input Boxes.");
@@ -96,6 +102,9 @@
         document.querySelectorAll(".modal_input").forEach(function(inputs){
             inputs.value="";
         })
+    }
+    function ExitModal(){
+        document.getElementById("add").style.display="none";
     }
     initial();
 </script>
