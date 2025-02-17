@@ -12,8 +12,8 @@
     <div class="top_banner">
         <h2 class="m-0">Travel Portal</h2>
         <div class="d-flex justify-content-end">
-            <a class="navigation mt-2 mx-4" href="">Visitor Messages</a>
-            <a class="navigation mt-2 mx-4" href="">Reservations</a>
+            <a class="navigation mt-2 mx-4" href="usermessage.php">Visitor Messages</a>
+            <a class="navigation mt-2 mx-4" href="reservation.php">Reservations</a>
             <div class="menu_box" id="menu">
                 <div class="menu_bar"></div>
                 <div class="menu_bar"></div>
@@ -22,8 +22,8 @@
         </div>
     </div>
     <div class="box_menu" id="box">
-        <a class="navigation mt-2 mx-4 text-white" onclick="location.href='usermessage.php'">Visitor Messages</a>
-        <a class="navigation mt-2 mx-4 text-white" onclick="location.href='reservation.php'">Reservations</a>
+        <a class="navigation mt-2 mx-4 text-white" href="usermessage.php">Visitor Messages</a>
+        <a class="navigation mt-2 mx-4 text-white" href="reservation.php">Reservations</a>
     </div>
 </body>
 </html>
