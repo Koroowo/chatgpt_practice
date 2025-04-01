@@ -79,7 +79,19 @@
         })
     }
     function AddModal(){
-        document.getElementById("add").style.display="block";
+        document.querySelector("body").style.overflowY="hidden";
+        let modal=$("#add")[0];
+        modal.style.display="block";
+        modal.style.opacity="0";
+        let opacity=0;
+        function animate(){
+            opacity+=0.10;
+            modal.style.opacity=opacity;
+            if(opacity<1){
+                requestAnimationFrame(animate);
+            }
+        }
+        requestAnimationFrame(animate);
     }
     function send(){
         document.getElementById("add").style.display="none";
@@ -104,7 +116,20 @@
         })
     }
     function ExitModal(){
-        document.getElementById("add").style.display="none";
+        document.querySelector("body").style.overflowY="auto";
+        let modal=$("#add")[0];
+        modal.style.opacity="1";
+        let opacity=1;
+        function animate(){
+            opacity-=0.1;
+            modal.style.opacity=opacity;
+            if(opacity>0){
+                requestAnimationFrame(animate);
+            }else{
+                modal.style.display="none";
+            }
+        }
+        requestAnimationFrame(animate);
     }
     initial();
 </script>
